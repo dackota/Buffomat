@@ -1,5 +1,9 @@
 # Changelog
 
+## Buffomat Classic 2025.5.5
+
+- [Bug] Fixed issue with "Missing Buffs to use a group buff" setting where setting it to 2 (or higher) would cause buffs to not be detected or applied when only 1 party member was missing the buff. The logic now properly checks per-group requirements for pre-WotLK and total requirements for WotLK, ensuring single buffs are cast when group buffs don't meet the threshold.
+
 ## Buffomat Classic 2025.5.4
 
 - Spell downranking: Restored the old broken feature, where a spell would automatically downrank if casted on a target too low level. As there isn't a way for addon to know it, it will learn from unsuccessful casts (you will need to cast the same buff again after it has learned). Requires enabled option for Downranking in 4.Convenience options tab.

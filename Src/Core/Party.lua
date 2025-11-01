@@ -169,12 +169,13 @@ function partyModule:RefreshParty(party, invalidGroups)
     party:Get5manPartyMembers()
   end
 
+  local isBuffableUnit = UnitIsPlayer("target") or UnitIsOtherPlayersPet("target")
+  local isPartyMember = UnitInParty("target") or UnitInRaid("target")
+
   if BuffomatShared.BuffTarget
       and UnitExists("target")
-      and UnitCanCooperate("player", "target") --is friendly
-      and UnitIsPlayer("target")               --is friendly player
-      and not UnitPlayerOrPetInParty("target") --out of party or raid
-      and not UnitPlayerOrPetInRaid("target")
+      and isBuffableUnit
+      and not isPartyMember
   then
     -- local targetedUnit = unitCacheModule:GetUnit("target", nil, nil, nil)
     -- if targetedUnit then

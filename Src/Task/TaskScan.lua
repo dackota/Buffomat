@@ -859,9 +859,25 @@ function taskScanModule:AddBuff(buffDef, party, buffCtx)
 
   local minBuff = BuffomatShared.MinBuff or 3
 
-  if buffDef.groupMana ~= nil
-      and not BuffomatShared.NoGroupBuff
-      and #buffDef.unitsNeedBuff >= minBuff then
+  -- Check if any group qualifies for group buffing
+  local shouldUseGroupBuff = false
+  if buffDef.groupMana ~= nil and not BuffomatShared.NoGroupBuff then
+    if envModule.haveWotLK then
+      -- WotLK: Group buff covers entire party, so check total
+      shouldUseGroupBuff = #buffDef.unitsNeedBuff >= minBuff
+    else
+      -- Pre-WotLK: Group buff works per 5-man group, check each group
+      for groupIndex = 1, 8 do
+        if buffDef.groupsNeedBuff[groupIndex]
+            and buffDef.groupsNeedBuff[groupIndex] >= minBuff then
+          shouldUseGroupBuff = true
+          break
+        end
+      end
+    end
+  end
+
+  if shouldUseGroupBuff then
     -- Add GROUP BUFF
     -- if group buff spell costs mana
     self:AddBuff_GroupBuff(buffDef, party, minBuff, buffCtx)

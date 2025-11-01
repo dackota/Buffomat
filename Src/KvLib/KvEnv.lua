@@ -10,7 +10,10 @@
 
 local envModule = LibStub("KvLibShared-Env") --[[@as KvSharedEnvModule]]
 
-local _, _, _, tocversion = GetBuildInfo()
+-- local _, _, _, tocversion = GetBuildInfo()
+envModule.isMistsOfPandaria = WOW_PROJECT_ID == WOW_PROJECT_MISTS_CLASSIC
+envModule.haveMistsOfPandaria = envModule.isMistsOfPandaria
+
 envModule.isCata = WOW_PROJECT_ID == WOW_PROJECT_CATACLYSM_CLASSIC
 envModule.haveCata = envModule.isCata
 

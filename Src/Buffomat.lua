@@ -4,6 +4,9 @@
 ---@field currentProfile ProfileSettings
 ---@field throttleUpdateTimer table AceTimerHandle useful for canceling the timer
 
+BINDING_HEADER_BUFFOMATHEADER = "Buffomat"
+BINDING_NAME_BUFFOMAT_WINDOW = "Toggle Window"
+
 local buffomatModule = LibStub("Buffomat-Buffomat") --[[@as BuffomatModule]]
 local _t = LibStub("Buffomat-Languages") --[[@as LanguagesModule]]
 local languagesModule = _t

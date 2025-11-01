@@ -142,10 +142,11 @@ end
 ---Event_PLAYER_TARGET_CHANGED
 ---Handle player target change, spells possibly might have changed too.
 local function Event_PLAYER_TARGET_CHANGED()
+  local isBuffableUnit = UnitIsPlayer("target") or UnitIsOtherPlayersPet("target")
+  local isPartyMember = UnitInParty("target") or UnitInRaid("target")
+
   if not InCombatLockdown() then
     -- Allow current party members, raid members or any player
-    local isBuffableUnit = UnitIsPlayer("target") or UnitIsOtherPlayersPet("target")
-    local isPartyMember = UnitInParty("target") or UnitInRaid("target")
     if isPartyMember or (isBuffableUnit and UnitIsFriend("target", "player"))
     then
       BuffomatAddon.lastTarget = UnitFullName("target")
@@ -163,7 +164,7 @@ local function Event_PLAYER_TARGET_CHANGED()
   local newName
   if UnitExists("target")
       and UnitCanCooperate("player", "target")
-      and UnitIsPlayer("target")
+      and isBuffableUnit
       and not UnitPlayerOrPetInParty("target")
       and not UnitPlayerOrPetInRaid("target")
   then
