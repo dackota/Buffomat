@@ -123,7 +123,7 @@ function buffomatModule.OptionsUpdate()
   taskScanModule:ScanTasks("OptionsUpdate")
 
   --spellButtonsTabModule:UpdateSpellsTab("OptionsUpdate")
-  managedUiModule:UpdateAll()
+  --managedUiModule:UpdateAll() -- Deprecated, module not loaded
   --BOM.minimapButton:UpdatePosition()
   --BOM.legacyOptions.DoCancel()
 end
@@ -390,6 +390,13 @@ function BuffomatAddon:Init()
   allBuffsModule:SetupCancelBuffs()
 
   BuffomatAddon.theMacro = macroModule:NewMacro(constModule.MACRO_NAME, nil)
+
+  -- Assign the setup function for slash command handler
+  BuffomatAddon.setupAvailableSpellsFn = function()
+    spellSetupModule:SetupAvailableSpells()
+    throttleModule:RequestTaskRescan("slashSpellbook")
+    taskScanModule:ScanTasks("slashSpellbook")
+  end
 
   languagesModule:LocalizationInit()
   slashModule:RegisterSlashCommandHandler({ "/bom", "/buffomat" }, self:MakeSlashCommand())

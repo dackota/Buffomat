@@ -133,6 +133,9 @@ local function Event_LoadingStop()
   if not oneTimeLoadItemsAndSpells then
     oneTimeLoadItemsAndSpells = true
     allBuffsModule:LoadItemsAndSpells()
+    -- Call SetupAvailableSpells to scan player's known spells
+    -- This is needed because SPELLS_CHANGED event may not fire reliably on initial load
+    spellSetupModule:SetupAvailableSpells()
   end
 
   BuffomatAddon.loadingScreenTimeOut = GetTime() + constModule.LOADING_SCREEN_TIMEOUT
