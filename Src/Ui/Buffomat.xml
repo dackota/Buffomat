@@ -87,10 +87,11 @@
     </Layers>
     <Scripts>
       <OnLoad>
-        self:RegisterForClicks("LeftButtonUp")
         UIPanelButton_OnLoad(self)
         --BomModuleManager.toolboxModule:TooltipWithTranslationKey(self, "TooltipCastButton")
       </OnLoad>
+      <OnMouseDown function="UIPanelButton_OnMouseDown"/>
+      <OnMouseUp function="UIPanelButton_OnMouseUp"/>
       <OnShow function="UIPanelButton_OnShow"/>
       <OnDisable function="UIPanelButton_OnDisable"/>
       <OnEnable function="UIPanelButton_OnEnable"/>
