@@ -222,8 +222,20 @@ function taskListPanelModule:CreateUIRow()
   -- Create the secure action button, as macro button
   local buffButton = libGUI:Create("NgSecureActionButton")
   self.buffButton = buffButton
-  buffButton.frame:SetAttribute("type", "macro")
-  buffButton.frame:SetAttribute("macro", constModule.MACRO_NAME)
+
+  -- Get macro ID by name (required for TBC Classic compatibility)
+  local macroId = GetMacroIndexByName(constModule.MACRO_NAME)
+
+  if macroId and macroId > 0 then
+    -- Use macro ID (numeric) - required for SecureActionButton in TBC Classic
+    buffButton.frame:SetAttribute("type", "macro")
+    buffButton.frame:SetAttribute("macro", macroId)
+  else
+    -- Fallback: use macro name
+    buffButton.frame:SetAttribute("type", "macro")
+    buffButton.frame:SetAttribute("macro", constModule.MACRO_NAME)
+  end
+
   buffButton:SetFullWidth(true)
   buffButton:SetHeight(24)
   -- buffButton.frame:SetNormalTexture("Interface\\Buttons\\UI-MicroButton-Talents-Up")
